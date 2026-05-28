@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControladorPruebas.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">daw</a> &gt; <a href="index.source.html" class="el_package">BackendBoys.dawBB.controladores</a> &gt; <span class="el_source">ControladorPruebas.java</span></div><h1>ControladorPruebas.java</h1><pre class="source lang-java linenums">package BackendBoys.dawBB.controladores;
+
+import BackendBoys.dawBB.dtos.PruebaNuevaDTO;
+import BackendBoys.dawBB.utils.DtoAndEntityMapper;
+import BackendBoys.dawBB.dtos.PruebaDTO;
+import BackendBoys.dawBB.entidades.Prueba;
+import BackendBoys.dawBB.excepciones.PruebasNoEncontrado;
+import BackendBoys.dawBB.servicios.PruebaServicio;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.headers.Header;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/pruebas&quot;)
+@Tag(name = &quot;Pruebas&quot;, description = &quot;Gestión de pruebas&quot;)
+public class ControladorPruebas {
+
+    private final PruebaServicio servicio;
+
+<span class="fc" id="L29">    public ControladorPruebas(PruebaServicio pruebaServicio) {</span>
+<span class="fc" id="L30">        this.servicio = pruebaServicio;</span>
+<span class="fc" id="L31">    }</span>
+
+    @GetMapping(&quot;/{idPrueba}&quot;)
+    @Operation(
+            operationId = &quot;consultarPrueba&quot;,
+            description = &quot;Devuelve información de una prueba concreta.&quot;,
+            responses = {
+                    @ApiResponse(
+                            responseCode = &quot;200&quot;,
+                            description = &quot;Devolución correcta&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;403&quot;,
+                            description = &quot;Acceso no autorizado&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;404&quot;,
+                            description = &quot;Prueba no encontrada&quot;
+                    )
+            }
+
+    )
+    public ResponseEntity&lt;PruebaDTO&gt; obtenerPrueba(@PathVariable Long idPrueba) {
+<span class="fc" id="L54">        Prueba prueba = servicio.obtenerPruebaPorId(idPrueba);</span>
+<span class="fc" id="L55">        PruebaDTO pruebaDTO = DtoAndEntityMapper.pruebaToDto(prueba);</span>
+<span class="fc" id="L56">        return ResponseEntity.ok(pruebaDTO);</span>
+    }
+
+    @PutMapping(&quot;/{idPrueba}&quot;)
+    @Operation(
+            description = &quot;Actualiza una prueba concreta&quot;,
+            responses = {
+                    @ApiResponse(
+                            responseCode = &quot;200&quot;,
+                            description = &quot;Actualización correcta&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;403&quot;,
+                            description = &quot;Acceso no autorizado&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;404&quot;,
+                            description = &quot;Prueba no encontrada&quot;
+                    )
+            }
+
+    )
+    public ResponseEntity&lt;PruebaDTO&gt; actualizarPrueba(@PathVariable Long idPrueba, @RequestBody PruebaNuevaDTO pruebaNueva) {
+<span class="fc" id="L79">        Prueba actualizada = servicio.actualizarPrueba(idPrueba, DtoAndEntityMapper.pruebaNuevaToPrueba(pruebaNueva));</span>
+<span class="fc" id="L80">        PruebaDTO actDto = DtoAndEntityMapper.pruebaToDto(actualizada);</span>
+<span class="fc" id="L81">        return ResponseEntity.ok(actDto);</span>
+    }
+
+    @DeleteMapping(&quot;/{idPrueba}&quot;)
+    @Operation(
+            description = &quot;Elimina una prueba concreta. Solo se puede hacer una eliminación lógica (marcando la prueba como eliminada).&quot;,
+            responses = {
+                    @ApiResponse(
+                            responseCode = &quot;200&quot;,
+                            description = &quot;Eliminación correcta&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;403&quot;,
+                            description = &quot;Acceso no autorizado&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;404&quot;,
+                            description = &quot;Prueba no encontrada&quot;
+                    )
+            }
+
+    )
+    public ResponseEntity&lt;Void&gt; eliminarPrueba(@PathVariable Long idPrueba) {
+<span class="fc" id="L104">        servicio.eliminarPrueba(idPrueba);</span>
+<span class="fc" id="L105">        return ResponseEntity.ok().build();</span>
+    }
+
+
+    @GetMapping(&quot;&quot;)
+    @Operation(
+            operationId = &quot;consultarPruebas&quot;,
+            description = &quot;Devuelve la lista de pruebas planificadas en un slot y convocatoria.&quot;,
+            responses = {
+                    @ApiResponse(
+                            responseCode = &quot;200&quot;,
+                            description = &quot;Devolución correcta&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;403&quot;,
+                            description = &quot;Acceso no autorizado&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;404&quot;,
+                            description = &quot;Slot o convocatoria no encontrada&quot;
+                    )
+            }
+
+
+    )
+    public ResponseEntity&lt;List&lt;PruebaDTO&gt;&gt; obtenerPruebas(@RequestParam(required = false) Long idConvocatoria, @RequestParam(required = false) Long idSlot) {
+<span class="fc" id="L131">        List&lt;Prueba&gt; lista = servicio.obtenerTodasLasPruebas(idConvocatoria, idSlot);</span>
+<span class="fc" id="L132">        List&lt;PruebaDTO&gt; listaDto = lista.stream().map(DtoAndEntityMapper::pruebaToDto).toList();</span>
+<span class="fc" id="L133">        return ResponseEntity.ok(listaDto);</span>
+    }
+
+    @PostMapping(&quot;&quot;)
+    @Operation(
+            description = &quot;Crea una nueva prueba. Devuelve la prueba creada.&quot;,
+            responses = {
+                    @ApiResponse(
+                            responseCode = &quot;201&quot;,
+                            description = &quot;La prueba se ha creado correctamente&quot;,
+                            headers = @Header(name = &quot;Location&quot;, description = &quot;URI del nuevo recurso&quot;, schema = @Schema(type = &quot;string&quot;))
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;403&quot;,
+                            description = &quot;Acceso no autorizado&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;404&quot;,
+                            description = &quot;Materia o el slot no se encuentran&quot;
+                    )
+            }
+
+
+    )
+    public ResponseEntity&lt;PruebaDTO&gt; crearPrueba(@RequestBody PruebaNuevaDTO pruebaNueva) {
+<span class="fc" id="L158">        Prueba creada = servicio.crearPrueba(DtoAndEntityMapper.pruebaNuevaToPrueba(pruebaNueva));</span>
+<span class="fc" id="L159">        PruebaDTO creadaDto = DtoAndEntityMapper.pruebaToDto(creada);</span>
+<span class="fc" id="L160">        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(&quot;/{id}&quot;)</span>
+<span class="fc" id="L161">                .buildAndExpand(creada.getId()).toUri();</span>
+<span class="fc" id="L162">        return ResponseEntity.created(location).body(creadaDto);</span>
+    }
+
+    @ExceptionHandler(PruebasNoEncontrado.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void noEncontrado() {
+<span class="fc" id="L168">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

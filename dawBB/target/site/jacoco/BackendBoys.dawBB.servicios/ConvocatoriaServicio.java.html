@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConvocatoriaServicio.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">daw</a> &gt; <a href="index.source.html" class="el_package">BackendBoys.dawBB.servicios</a> &gt; <span class="el_source">ConvocatoriaServicio.java</span></div><h1>ConvocatoriaServicio.java</h1><pre class="source lang-java linenums">package BackendBoys.dawBB.servicios;
+
+import BackendBoys.dawBB.dtos.ConvocatoriaNuevaDTO;
+import BackendBoys.dawBB.entidades.Convocatoria;
+import BackendBoys.dawBB.repositorios.ConvocatoriaRepositorio;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ConvocatoriaServicio {
+
+    private final ConvocatoriaRepositorio convocatoriaRepositorio;
+
+<span class="fc" id="L17">    public ConvocatoriaServicio(ConvocatoriaRepositorio convocatoriaRepositorio) {</span>
+<span class="fc" id="L18">        this.convocatoriaRepositorio = convocatoriaRepositorio;</span>
+<span class="fc" id="L19">    }</span>
+
+    public List&lt;Convocatoria&gt; obtenerTodasConvocatorias() {
+<span class="fc" id="L22">        return convocatoriaRepositorio.findAll();</span>
+    }
+
+    public Convocatoria obtenerConvocatoriaActual() {
+<span class="fc" id="L26">        return convocatoriaRepositorio.findFirstByOrderByIdConvocatoriaDesc();</span>
+    }
+
+    @Transactional
+    public Convocatoria addConvocatoria(Convocatoria convocatoria) {
+        //Obtenemos la convocatoria que esta a true como actual y la seteamos como no activa
+<span class="fc" id="L32">        Optional&lt;Convocatoria&gt; actual = convocatoriaRepositorio.findByActualTrue();</span>
+<span class="fc" id="L33">        actual.ifPresent(</span>
+                convocatoria1 -&gt; {
+<span class="fc" id="L35">                    convocatoria1.setActual(false);</span>
+<span class="fc" id="L36">                    convocatoriaRepositorio.save(convocatoria1);</span>
+<span class="fc" id="L37">                })</span>
+        ;
+
+<span class="fc" id="L40">        convocatoria.setIdConvocatoria(null);</span>
+<span class="fc" id="L41">        convocatoria.setActual(true);</span>
+
+<span class="fc" id="L43">        return convocatoriaRepositorio.save(convocatoria);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

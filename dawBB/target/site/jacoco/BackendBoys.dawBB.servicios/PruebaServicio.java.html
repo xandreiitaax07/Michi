@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PruebaServicio.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">daw</a> &gt; <a href="index.source.html" class="el_package">BackendBoys.dawBB.servicios</a> &gt; <span class="el_source">PruebaServicio.java</span></div><h1>PruebaServicio.java</h1><pre class="source lang-java linenums">package BackendBoys.dawBB.servicios;
+
+import BackendBoys.dawBB.dtos.PruebaDTO;
+import BackendBoys.dawBB.dtos.PruebaNuevaDTO;
+import BackendBoys.dawBB.entidades.Prueba;
+import BackendBoys.dawBB.excepciones.PruebasNoEncontrado;
+import BackendBoys.dawBB.repositorios.PruebaRepositorio;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+public class PruebaServicio {
+    private final PruebaRepositorio pruebaRepositorio;
+    private final SlotServicio slotServicio;
+    private final MateriaServicio materiaServicio;
+
+    public PruebaServicio(PruebaRepositorio pruebaRepositorio, SlotServicio slotServicio,
+<span class="fc" id="L20">                          MateriaServicio materiaServicio) {</span>
+
+<span class="fc" id="L22">        this.pruebaRepositorio = pruebaRepositorio;</span>
+<span class="fc" id="L23">        this.slotServicio = slotServicio;</span>
+<span class="fc" id="L24">        this.materiaServicio = materiaServicio;</span>
+<span class="fc" id="L25">    }</span>
+
+    public List&lt;Prueba&gt; obtenerTodasLasPruebas(Long idConvocatoria, Long idSlot) {
+<span class="fc bfc" id="L28" title="All 4 branches covered.">        if (idConvocatoria != null &amp;&amp; idSlot != null) {</span>
+<span class="fc" id="L29">            return pruebaRepositorio.findBySlotConvocatoriaIdConvocatoriaAndSlotId(idConvocatoria, idSlot);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        } else if (idConvocatoria != null) {</span>
+<span class="fc" id="L31">            return pruebaRepositorio.findBySlotConvocatoriaIdConvocatoria(idConvocatoria);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        } else if (idSlot != null) {</span>
+<span class="fc" id="L33">            return pruebaRepositorio.findBySlotId(idSlot);</span>
+        } else {
+<span class="fc" id="L35">            return pruebaRepositorio.findBySlotConvocatoriaActualTrue();</span>
+        }
+    }
+
+    public Prueba obtenerPruebaPorId(Long id) {
+<span class="fc" id="L40">        return pruebaRepositorio.findById(id).orElseThrow(() -&gt; new PruebasNoEncontrado(id));</span>
+    }
+
+    @Transactional
+    public Prueba crearPrueba(Prueba prueba) {
+<span class="fc" id="L45">        prueba.setMateria(materiaServicio.obtenerMateriaPorId(prueba.getMateria().getId()));</span>
+<span class="fc" id="L46">        prueba.setSlot(slotServicio.obtenerSlotPorId(prueba.getSlot().getId()));</span>
+<span class="fc" id="L47">        prueba.setId(null);</span>
+<span class="fc" id="L48">        prueba.setEliminada(false);</span>
+<span class="fc" id="L49">        return pruebaRepositorio.save(prueba);</span>
+    }
+
+    @Transactional
+    public Prueba actualizarPrueba(Long id, Prueba prueba) {
+<span class="fc" id="L54">        Prueba existente = obtenerPruebaPorId(id);</span>
+<span class="fc" id="L55">        existente.setMateria(materiaServicio.obtenerMateriaPorId(prueba.getMateria().getId()));</span>
+<span class="fc" id="L56">        existente.setSlot(slotServicio.obtenerSlotPorId(prueba.getSlot().getId()));</span>
+<span class="fc" id="L57">        existente.setEliminada(prueba.getEliminada());</span>
+<span class="fc" id="L58">        return pruebaRepositorio.save(existente);</span>
+    }
+
+    @Transactional
+    public void eliminarPrueba(Long id) {
+<span class="fc" id="L63">        Prueba prueba = obtenerPruebaPorId(id);</span>
+<span class="fc" id="L64">        prueba.setEliminada(true);</span>
+<span class="fc" id="L65">        pruebaRepositorio.save(prueba);</span>
+<span class="fc" id="L66">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

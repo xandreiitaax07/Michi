@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------------
+Test set: BackendBoys.dawBB.ConvocatoriasEndPointsTests
+-------------------------------------------------------------------------------
+Tests run: 28, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 60.57 s -- in BackendBoys.dawBB.ConvocatoriasEndPointsTests
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaExtraConvocatoria -- Time elapsed: 2.720 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.obtenerConvocatoriasSinAutenticacion -- Time elapsed: 0.740 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.crearConvocatoriaDevuelveLocation -- Time elapsed: 1.884 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaGetAuthenticatedUser -- Time elapsed: 1.504 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaSwagger -- Time elapsed: 0.190 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaMapperNulos -- Time elapsed: 0.170 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.crearConvocatoriaSeGuardaComoActual -- Time elapsed: 0.227 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.obtenerConvocatoriasListaVacia -- Time elapsed: 0.130 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.crearConvocatoriaSinAutenticacion -- Time elapsed: 0.088 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaRamasSeguridadYJwt -- Time elapsed: 0.071 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.obtenerConvocatoriaActualExistente -- Time elapsed: 0.130 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaFinalArchivosRestantes -- Time elapsed: 0.073 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaGetAuthenticatedUserNull -- Time elapsed: 0.053 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.obtenerConvocatoriaActualSinAutenticacion -- Time elapsed: 0.079 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaFinalSecurityConfiguration -- Time elapsed: 0.508 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaMappersAnidados -- Time elapsed: 0.044 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.obtenerConvocatoriasConDatos -- Time elapsed: 0.088 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaAuthenticationManagerBothBranches -- Time elapsed: 0.161 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.obtenerConvocatoriaActualConVariasConvocatorias -- Time elapsed: 0.078 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaJwtUtilRamasInalcanzables -- Time elapsed: 0.140 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.crearConvocatoriaDesactivaAnteriorActual -- Time elapsed: 0.194 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.obtenerConvocatoriaActualNoExiste -- Time elapsed: 0.076 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaAuthenticationManagerProvided -- Time elapsed: 0.068 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaMasivaConvocatorias -- Time elapsed: 0.062 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaAbsolutaEqualsRamas -- Time elapsed: 0.048 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaMainConstructor -- Time elapsed: 0.059 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.crearConvocatoriaValida -- Time elapsed: 0.077 s
+BackendBoys.dawBB.ConvocatoriasEndPointsTests.coberturaFinalRestante -- Time elapsed: 0.480 s

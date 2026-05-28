@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: BackendBoys.dawBB.PruebasEndpointsTests
+-------------------------------------------------------------------------------
+Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.056 s -- in BackendBoys.dawBB.PruebasEndpointsTests
+BackendBoys.dawBB.PruebasEndpointsTests.actualizarPruebaInexistente -- Time elapsed: 0.409 s
+BackendBoys.dawBB.PruebasEndpointsTests.actualizarPruebaExistente -- Time elapsed: 0.432 s
+BackendBoys.dawBB.PruebasEndpointsTests.actualizarSlotInexistente -- Time elapsed: 0.429 s
+BackendBoys.dawBB.PruebasEndpointsTests.obtenerPruebaSinAutenticacion -- Time elapsed: 0.409 s
+BackendBoys.dawBB.PruebasEndpointsTests.coberturaMasivaPruebas -- Time elapsed: 0.398 s
+BackendBoys.dawBB.PruebasEndpointsTests.obtenerPruebaInexistente -- Time elapsed: 0.413 s
+BackendBoys.dawBB.PruebasEndpointsTests.coberturaExtraPrueba -- Time elapsed: 0.407 s
+BackendBoys.dawBB.PruebasEndpointsTests.eliminarPruebaExistente -- Time elapsed: 0.492 s
+BackendBoys.dawBB.PruebasEndpointsTests.obtenerPruebasPorConvocatoria -- Time elapsed: 0.448 s
+BackendBoys.dawBB.PruebasEndpointsTests.crearPruebaValida -- Time elapsed: 0.394 s
+BackendBoys.dawBB.PruebasEndpointsTests.coberturaRamasPruebaServicio -- Time elapsed: 0.402 s
+BackendBoys.dawBB.PruebasEndpointsTests.obtenerPruebasPorSlot -- Time elapsed: 0.405 s
+BackendBoys.dawBB.PruebasEndpointsTests.obtenerPruebaExistente -- Time elapsed: 0.467 s
+BackendBoys.dawBB.PruebasEndpointsTests.obtenerSlotInexistente -- Time elapsed: 0.415 s
+BackendBoys.dawBB.PruebasEndpointsTests.obtenerPruebasConvocatoriaActual -- Time elapsed: 0.384 s
+BackendBoys.dawBB.PruebasEndpointsTests.eliminarPruebaInexistente -- Time elapsed: 0.378 s

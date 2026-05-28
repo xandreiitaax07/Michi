@@ -1,0 +1,25 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+daw,BackendBoys.dawBB.utils,Materias,0,177,0,0,0,30,0,1,0,1
+daw,BackendBoys.dawBB.utils,DtoAndEntityMapper,0,311,0,24,0,102,0,25,0,13
+daw,BackendBoys.dawBB,DawBbApplication,0,8,0,0,0,3,0,2,0,2
+daw,BackendBoys.dawBB.servicios,ConvocatoriaServicio,0,45,0,0,0,13,0,5,0,5
+daw,BackendBoys.dawBB.servicios,MateriaServicio,0,88,0,4,0,21,0,10,0,8
+daw,BackendBoys.dawBB.servicios,SlotServicio,0,81,0,2,0,20,0,8,0,7
+daw,BackendBoys.dawBB.servicios,PruebaServicio,0,127,0,8,0,27,0,11,0,7
+daw,BackendBoys.dawBB.controladores,ControladorConvocatorias,0,58,0,2,0,16,0,6,0,5
+daw,BackendBoys.dawBB.controladores,ControladorSlots,0,79,0,0,0,22,0,7,0,7
+daw,BackendBoys.dawBB.controladores,ControladorPruebas,0,80,0,0,0,20,0,7,0,7
+daw,BackendBoys.dawBB.controladores,ControladorMaterias,0,80,0,0,0,23,0,7,0,7
+daw,BackendBoys.dawBB.excepciones,MateriaNoEncontrado,0,5,0,0,0,2,0,1,0,1
+daw,BackendBoys.dawBB.excepciones,PruebasNoEncontrado,0,5,0,0,0,2,0,1,0,1
+daw,BackendBoys.dawBB.excepciones,SlotsNoEncontrado,0,5,0,0,0,2,0,1,0,1
+daw,BackendBoys.dawBB.excepciones,ConvocatoriaNoEncontrado,0,5,0,0,0,2,0,1,0,1
+daw,BackendBoys.dawBB.entidades,Slot,0,12,0,0,0,3,0,1,0,1
+daw,BackendBoys.dawBB.entidades,Convocatoria,0,13,0,0,0,3,0,1,0,1
+daw,BackendBoys.dawBB.entidades,Materia,0,8,0,0,0,2,0,1,0,1
+daw,BackendBoys.dawBB.entidades,Prueba,0,7,0,0,0,3,0,1,0,1
+daw,BackendBoys.dawBB.seguridad,SecurityConfiguration,0,90,0,4,0,21,0,9,0,7
+daw,BackendBoys.dawBB.seguridad,JwtUtil,0,84,0,4,0,19,0,9,0,7
+daw,BackendBoys.dawBB.seguridad,SecurityConfiguration.new AuthenticationManager() {...},0,11,0,0,0,2,0,2,0,2
+daw,BackendBoys.dawBB.seguridad,JwtRequestFilter,0,101,0,10,0,26,0,7,0,2
+daw,BackendBoys.dawBB.seguridad,SwaggerConfig,0,32,0,0,0,10,0,2,0,2

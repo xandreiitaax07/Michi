@@ -1,0 +1,29 @@
+-------------------------------------------------------------------------------
+Test set: BackendBoys.dawBB.MateriasEndpointsTests
+-------------------------------------------------------------------------------
+Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.11 s -- in BackendBoys.dawBB.MateriasEndpointsTests
+BackendBoys.dawBB.MateriasEndpointsTests.eliminarMateriaExistente -- Time elapsed: 0.088 s
+BackendBoys.dawBB.MateriasEndpointsTests.eliminarMateriaYaEliminada -- Time elapsed: 0.064 s
+BackendBoys.dawBB.MateriasEndpointsTests.obtenerMateriaInexistente -- Time elapsed: 0.051 s
+BackendBoys.dawBB.MateriasEndpointsTests.crearMateria -- Time elapsed: 0.065 s
+BackendBoys.dawBB.MateriasEndpointsTests.remateFinalSeguridad -- Time elapsed: 0.154 s
+BackendBoys.dawBB.MateriasEndpointsTests.actualizarMateriaInexistente -- Time elapsed: 0.073 s
+BackendBoys.dawBB.MateriasEndpointsTests.eliminarMateriaSinAutenticacion -- Time elapsed: 0.044 s
+BackendBoys.dawBB.MateriasEndpointsTests.crearMateriaSinAutenticacion -- Time elapsed: 0.043 s
+BackendBoys.dawBB.MateriasEndpointsTests.obtenerMateriasVacia -- Time elapsed: 0.066 s
+BackendBoys.dawBB.MateriasEndpointsTests.obtenerTodasLasMaterias -- Time elapsed: 0.074 s
+BackendBoys.dawBB.MateriasEndpointsTests.obtenerMateriaExistente -- Time elapsed: 0.072 s
+BackendBoys.dawBB.MateriasEndpointsTests.coberturaRamasMateriaServicio -- Time elapsed: 0.045 s
+BackendBoys.dawBB.MateriasEndpointsTests.crearMultiplesMaterias -- Time elapsed: 0.095 s
+BackendBoys.dawBB.MateriasEndpointsTests.eliminarMateriaInexistente -- Time elapsed: 0.066 s
+BackendBoys.dawBB.MateriasEndpointsTests.actualizarMateriaExistente -- Time elapsed: 0.078 s
+BackendBoys.dawBB.MateriasEndpointsTests.coberturaJwtUtilSinExpiracion -- Time elapsed: 0.044 s
+BackendBoys.dawBB.MateriasEndpointsTests.obtenerMateriaEliminada -- Time elapsed: 0.053 s
+BackendBoys.dawBB.MateriasEndpointsTests.coberturaMainYEnum -- Time elapsed: 0.367 s
+BackendBoys.dawBB.MateriasEndpointsTests.actualizarMateriaEliminada -- Time elapsed: 0.053 s
+BackendBoys.dawBB.MateriasEndpointsTests.coberturaExtraMateria -- Time elapsed: 0.072 s
+BackendBoys.dawBB.MateriasEndpointsTests.coberturaFiltroRamasOcultas -- Time elapsed: 0.064 s
+BackendBoys.dawBB.MateriasEndpointsTests.obtenerMateriaSinAutenticacion -- Time elapsed: 0.048 s
+BackendBoys.dawBB.MateriasEndpointsTests.actualizarMateriaSinAutenticacion -- Time elapsed: 0.042 s
+BackendBoys.dawBB.MateriasEndpointsTests.coberturaMasivaMateriasYSeguridad -- Time elapsed: 0.056 s
+BackendBoys.dawBB.MateriasEndpointsTests.obtenerMateriasSinAutenticacion -- Time elapsed: 0.046 s

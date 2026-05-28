@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControladorMaterias.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">daw</a> &gt; <a href="index.source.html" class="el_package">BackendBoys.dawBB.controladores</a> &gt; <span class="el_source">ControladorMaterias.java</span></div><h1>ControladorMaterias.java</h1><pre class="source lang-java linenums">package BackendBoys.dawBB.controladores;
+
+import BackendBoys.dawBB.dtos.MateriaNuevaDTO;
+import BackendBoys.dawBB.utils.DtoAndEntityMapper;
+import BackendBoys.dawBB.dtos.MateriaDTO;
+import BackendBoys.dawBB.entidades.Materia;
+import BackendBoys.dawBB.excepciones.MateriaNoEncontrado;
+import BackendBoys.dawBB.servicios.MateriaServicio;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.headers.Header;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/materias&quot;)
+@Tag(name = &quot;Materias&quot;, description = &quot;Gestión de materias&quot;)
+public class ControladorMaterias {
+
+    private final MateriaServicio servicio;
+
+<span class="fc" id="L29">    public ControladorMaterias(MateriaServicio servicio) {</span>
+<span class="fc" id="L30">        this.servicio = servicio;</span>
+<span class="fc" id="L31">    }</span>
+
+    //Obtener Materia por ID
+    @GetMapping(&quot;/{idMateria}&quot;)
+    @Operation(
+            operationId = &quot;consultarMateria&quot;,
+            description = &quot;Devuelve información de una materia concreta.&quot;,
+            responses = {
+                    @ApiResponse(
+                            responseCode = &quot;200&quot;,
+                            description = &quot;Devolución correcta&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;403&quot;,
+                            description = &quot;Acceso no autorizado&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;404&quot;,
+                            description = &quot;Materia no encontrada&quot;
+                    )
+            }
+    )
+    public ResponseEntity&lt;MateriaDTO&gt; obtenerMateria(@PathVariable Long idMateria) {
+
+        // Llamada al serivico
+<span class="fc" id="L56">        Materia materia = servicio.obtenerMateriaPorId(idMateria);</span>
+        //convertir materia a materiaDTO
+<span class="fc" id="L58">        MateriaDTO materiaDTO = DtoAndEntityMapper.materiaToDto(materia);</span>
+        // Devolver materia con codigo 200 (ok)
+<span class="fc" id="L60">        return ResponseEntity.ok(materiaDTO);</span>
+    }
+
+    //Actualiza una materia concreta
+    @PutMapping(&quot;/{idMateria}&quot;)
+    @Operation(
+            description = &quot;Actualiza una materia concreta.&quot;,
+            responses = {
+                    @ApiResponse(
+                            responseCode = &quot;200&quot;,
+                            description = &quot;Actualización correcta&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;403&quot;,
+                            description = &quot;Acceso no autorizado&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;404&quot;,
+                            description = &quot;Materia no encontrada&quot;
+                    )
+            }
+    )
+    public ResponseEntity&lt;MateriaDTO&gt; actualizarMateria(@PathVariable Long idMateria, @RequestBody MateriaNuevaDTO materiaNueva) {
+        //conversion de dto a materia
+<span class="fc" id="L84">        Materia materiaEntidad = DtoAndEntityMapper.materiaNuevaToMateria(materiaNueva);</span>
+        // Le pasamos el ID y materia al servicio
+<span class="fc" id="L86">        Materia materiaGuardada = servicio.actualizarMateria(idMateria, materiaEntidad);</span>
+        //convertir materia guardada a DTO
+<span class="fc" id="L88">        MateriaDTO respuestaDTO = DtoAndEntityMapper.materiaToDto(materiaGuardada);</span>
+
+<span class="fc" id="L90">        return ResponseEntity.ok(respuestaDTO);</span>
+    }
+
+    //eliminar una materia especifica de manera logica
+    @DeleteMapping(&quot;/{idMateria}&quot;)
+    @Operation(
+            description = &quot;Elimina una materia concreta. Solo se puede hacer una eliminación lógica (marcando la materia como eliminada).&quot;,
+            responses = {
+                    @ApiResponse(
+                            responseCode = &quot;200&quot;,
+                            description = &quot;Eliminación correcta&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;403&quot;,
+                            description = &quot;Acceso no autorizado&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;404&quot;,
+                            description = &quot;Materia no encontrada&quot;
+                    )
+            }
+    )
+    public ResponseEntity&lt;Void&gt; eliminarMateria(@PathVariable Long idMateria) {
+        //Llamada al servicio
+<span class="fc" id="L114">        servicio.eliminarMateria(idMateria);</span>
+
+        // Devolver un código 200 (OK) sin cuerpo (build)
+<span class="fc" id="L117">        return ResponseEntity.ok().build();</span>
+    }
+
+    @GetMapping(&quot;&quot;)
+    @Operation(
+            operationId = &quot;consultarMaterias&quot;,
+            description = &quot;Devuelve la lista de materias.&quot;,
+            responses = {
+                    @ApiResponse(
+                            responseCode = &quot;200&quot;,
+                            description = &quot;Devolución correcta&quot;
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;403&quot;,
+                            description = &quot;Acceso no autorizado&quot;
+                    )
+            }
+    )
+    public ResponseEntity&lt;List&lt;MateriaDTO&gt;&gt; obtenerMaterias() {
+        //llamada a servicio
+<span class="fc" id="L137">        List&lt;Materia&gt; listaMaterias = servicio.obtenerTodasLasMateriasActivas();</span>
+
+<span class="fc" id="L139">        List&lt;MateriaDTO&gt; listaMateriasDto = listaMaterias.stream().map(DtoAndEntityMapper::materiaToDto).toList();</span>
+
+        //Devolver la lista con un 200 OK
+<span class="fc" id="L142">        return ResponseEntity.ok(listaMateriasDto);</span>
+    }
+
+    @PostMapping(&quot;&quot;)
+    @Operation(
+            description = &quot;Crea una nueva materia. Devuelve la materia creada.&quot;,
+            responses = {
+                    @ApiResponse(
+                            responseCode = &quot;201&quot;,
+                            description = &quot;La materia se ha creado correctamente&quot;,
+                            headers = @Header(name = &quot;Location&quot;, description = &quot;URI del nuevo recurso&quot;, schema = @Schema(type = &quot;string&quot;))
+                    ),
+                    @ApiResponse(
+                            responseCode = &quot;403&quot;,
+                            description = &quot;Acceso no autorizado&quot;
+                    )
+            }
+    )
+    public ResponseEntity&lt;MateriaDTO&gt; crearMateria(@RequestBody MateriaNuevaDTO materiaNueva) {
+        //Llamada al servicio
+<span class="fc" id="L162">        Materia materiaGuardada = servicio.crearMateria(DtoAndEntityMapper.materiaNuevaToMateria(materiaNueva));</span>
+
+        //materia a dto
+<span class="fc" id="L165">        MateriaDTO respuestaDTO = DtoAndEntityMapper.materiaToDto(materiaGuardada);</span>
+
+<span class="fc" id="L167">        URI location = ServletUriComponentsBuilder.fromCurrentRequest().</span>
+<span class="fc" id="L168">                path(&quot;/{idMateria}&quot;)</span>
+<span class="fc" id="L169">                .buildAndExpand(respuestaDTO.getId())</span>
+<span class="fc" id="L170">                .toUri();</span>
+
+        //porque no acepta esto? --&gt; por el tipo de retorno del Response Entity
+<span class="fc" id="L173">        return ResponseEntity.created(location).body(respuestaDTO);</span>
+    }
+
+    @ExceptionHandler(MateriaNoEncontrado.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void noEncontrado() {
+<span class="fc" id="L179">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

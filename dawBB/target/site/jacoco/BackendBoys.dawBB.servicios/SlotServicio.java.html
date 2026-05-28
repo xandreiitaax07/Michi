@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SlotServicio.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">daw</a> &gt; <a href="index.source.html" class="el_package">BackendBoys.dawBB.servicios</a> &gt; <span class="el_source">SlotServicio.java</span></div><h1>SlotServicio.java</h1><pre class="source lang-java linenums">package BackendBoys.dawBB.servicios;
+
+import BackendBoys.dawBB.entidades.Slot;
+import BackendBoys.dawBB.excepciones.SlotsNoEncontrado;
+import BackendBoys.dawBB.repositorios.SlotRepositorio;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+public class SlotServicio {
+
+    private final SlotRepositorio slotRepositorio;
+
+<span class="fc" id="L16">    public SlotServicio(SlotRepositorio slotRepositorio) {</span>
+<span class="fc" id="L17">        this.slotRepositorio = slotRepositorio;</span>
+<span class="fc" id="L18">    }</span>
+
+    public Slot obtenerSlotPorId(Long id) {
+<span class="fc" id="L21">        return slotRepositorio.findById(id).orElseThrow(() -&gt; new SlotsNoEncontrado(id));</span>
+    }
+
+    @Transactional
+    public Slot modificarSlot(Long id, Slot slot) {
+<span class="fc" id="L26">        Slot existente = obtenerSlotPorId(id);</span>
+<span class="fc" id="L27">        existente.setEliminado(slot.getEliminado());</span>
+<span class="fc" id="L28">        existente.setConvocatoria(slot.getConvocatoria());</span>
+<span class="fc" id="L29">        existente.setFin(slot.getFin());</span>
+<span class="fc" id="L30">        existente.setInicio(slot.getInicio());</span>
+<span class="fc" id="L31">        slotRepositorio.save(existente);</span>
+<span class="fc" id="L32">        return existente;</span>
+    }
+
+    @Transactional
+    public void eliminarSlot(Long id) {
+<span class="fc" id="L37">        Slot slot = obtenerSlotPorId(id);</span>
+<span class="fc" id="L38">        slot.setEliminado(true);</span>
+<span class="fc" id="L39">        slotRepositorio.save(slot);</span>
+<span class="fc" id="L40">    }</span>
+
+    public List&lt;Slot&gt; obtenerTodosSlots(Long idConvocatoria) {
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (idConvocatoria != null) {</span>
+<span class="fc" id="L44">            return slotRepositorio.findByConvocatoriaIdConvocatoria(idConvocatoria);</span>
+        }
+<span class="fc" id="L46">        return slotRepositorio.findByConvocatoriaActualTrue();</span>
+    }
+
+    @Transactional
+    public Slot addSlot(Slot slot) {
+<span class="fc" id="L51">        slot.setId(null);</span>
+<span class="fc" id="L52">        return slotRepositorio.save(slot);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

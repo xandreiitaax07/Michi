@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: BackendBoys.dawBB.SlotsEndpointsTests
+-------------------------------------------------------------------------------
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.500 s -- in BackendBoys.dawBB.SlotsEndpointsTests
+BackendBoys.dawBB.SlotsEndpointsTests.actualizarSlotInexistente -- Time elapsed: 0.041 s
+BackendBoys.dawBB.SlotsEndpointsTests.actualizarSlotExistente -- Time elapsed: 0.061 s
+BackendBoys.dawBB.SlotsEndpointsTests.coberturaMasivaSlots -- Time elapsed: 0.060 s
+BackendBoys.dawBB.SlotsEndpointsTests.obtenerSlotExistente -- Time elapsed: 0.081 s
+BackendBoys.dawBB.SlotsEndpointsTests.obtenerSlotsConvocatoriaActual -- Time elapsed: 0.088 s
+BackendBoys.dawBB.SlotsEndpointsTests.crearSlotValido -- Time elapsed: 0.086 s
+BackendBoys.dawBB.SlotsEndpointsTests.eliminarSlotInexistente -- Time elapsed: 0.059 s
+BackendBoys.dawBB.SlotsEndpointsTests.obtenerSlotSinAutenticacion -- Time elapsed: 0.059 s
+BackendBoys.dawBB.SlotsEndpointsTests.coberturaExtraSlot -- Time elapsed: 0.046 s
+BackendBoys.dawBB.SlotsEndpointsTests.eliminarSlotExistente -- Time elapsed: 0.082 s
+BackendBoys.dawBB.SlotsEndpointsTests.obtenerSlotInexistente -- Time elapsed: 0.059 s
+BackendBoys.dawBB.SlotsEndpointsTests.obtenerSlotsConvocatoriaEspecifica -- Time elapsed: 0.084 s

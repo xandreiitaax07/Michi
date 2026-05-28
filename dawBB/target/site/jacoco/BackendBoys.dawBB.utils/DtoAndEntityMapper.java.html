@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DtoAndEntityMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">daw</a> &gt; <a href="index.source.html" class="el_package">BackendBoys.dawBB.utils</a> &gt; <span class="el_source">DtoAndEntityMapper.java</span></div><h1>DtoAndEntityMapper.java</h1><pre class="source lang-java linenums">package BackendBoys.dawBB.utils;
+
+import BackendBoys.dawBB.dtos.*;
+import BackendBoys.dawBB.entidades.Convocatoria;
+import BackendBoys.dawBB.entidades.Materia;
+import BackendBoys.dawBB.entidades.Prueba;
+import BackendBoys.dawBB.entidades.Slot;
+import BackendBoys.dawBB.repositorios.MateriaRepositorio;
+
+<span class="fc" id="L10">public class DtoAndEntityMapper {</span>
+
+    public static Prueba pruebaNuevaToPrueba(PruebaNuevaDTO pruebaNueva) {
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        if (pruebaNueva == null) {</span>
+<span class="fc" id="L14">            return null;</span>
+        }
+<span class="fc" id="L16">        Prueba prueba = new Prueba();</span>
+<span class="fc" id="L17">        Slot slot = new Slot();</span>
+<span class="fc" id="L18">        Materia materia = new Materia();</span>
+<span class="fc" id="L19">        prueba.setId(null);</span>
+<span class="fc" id="L20">        prueba.setEliminada(false);</span>
+<span class="fc" id="L21">        materia.setId(pruebaNueva.getMateria().getId());</span>
+<span class="fc" id="L22">        slot.setId(pruebaNueva.getSlot().getId());</span>
+<span class="fc" id="L23">        prueba.setMateria(materia);</span>
+<span class="fc" id="L24">        prueba.setSlot(slot);</span>
+<span class="fc" id="L25">        return prueba;</span>
+    }
+
+    public static Convocatoria convocatoriaNuevaToConvocatoria(ConvocatoriaNuevaDTO convocatoriaNueva) {
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (convocatoriaNueva == null) {</span>
+<span class="fc" id="L30">            return null;</span>
+        }
+
+<span class="fc" id="L33">        Convocatoria convocatoria = new Convocatoria();</span>
+<span class="fc" id="L34">        convocatoria.setIdConvocatoria(null);</span>
+<span class="fc" id="L35">        convocatoria.setNombre(convocatoriaNueva.getNombre());</span>
+<span class="fc" id="L36">        convocatoria.setFechaInicio(convocatoriaNueva.getFechaInicio());</span>
+<span class="fc" id="L37">        convocatoria.setFechaFin(convocatoriaNueva.getFechaFin());</span>
+<span class="fc" id="L38">        convocatoria.setActual(false);</span>
+<span class="fc" id="L39">        convocatoria.setMaterias(null);</span>
+<span class="fc" id="L40">        convocatoria.setSlots(null);</span>
+<span class="fc" id="L41">        return convocatoria;</span>
+    }
+
+    public static Materia materiaNuevaToMateria(MateriaNuevaDTO materiaNueva) {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (materiaNueva == null) {</span>
+<span class="fc" id="L46">            return null;</span>
+        }
+<span class="fc" id="L48">        Materia materia = new Materia();</span>
+<span class="fc" id="L49">        materia.setId(null);</span>
+<span class="fc" id="L50">        materia.setNombre(materiaNueva.getNombre());</span>
+<span class="fc" id="L51">        materia.setEliminada(false);</span>
+<span class="fc" id="L52">        materia.setPruebas(null);</span>
+<span class="fc" id="L53">        return materia;</span>
+    }
+
+    public static Slot slotNuevoToSlot(SlotNuevoDTO slotNuevo) {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (slotNuevo == null) {</span>
+<span class="fc" id="L58">            return null;</span>
+        }
+<span class="fc" id="L60">        Slot slot = new Slot();</span>
+<span class="fc" id="L61">        slot.setConvocatoria(convocatoriaDTOtoEntity(slotNuevo.getConvocatoria()));</span>
+<span class="fc" id="L62">        slot.setInicio(slotNuevo.getInicio());</span>
+<span class="fc" id="L63">        slot.setFin(slotNuevo.getFin());</span>
+<span class="fc" id="L64">        slot.setEliminado(slotNuevo.getEliminado());</span>
+<span class="fc" id="L65">        slot.setId(null);</span>
+<span class="fc" id="L66">        slot.setEliminado(false);</span>
+<span class="fc" id="L67">        return slot;</span>
+    }
+
+    public static ConvocatoriaDTO convocatoriaToDto(Convocatoria convocatoria) {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (convocatoria == null) {</span>
+<span class="fc" id="L72">            return null;</span>
+        }
+
+<span class="fc" id="L75">        return new ConvocatoriaDTO(</span>
+<span class="fc" id="L76">                convocatoria.getIdConvocatoria(),</span>
+<span class="fc" id="L77">                convocatoria.getNombre(),</span>
+<span class="fc" id="L78">                convocatoria.getFechaInicio(),</span>
+<span class="fc" id="L79">                convocatoria.getFechaFin()</span>
+        );
+    }
+
+    public static Convocatoria convocatoriaDTOtoEntity(ConvocatoriaDTO convocatoriaDTO) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (convocatoriaDTO == null) {</span>
+<span class="fc" id="L85">            return null;</span>
+        }
+
+<span class="fc" id="L88">        Convocatoria convocatoria = new Convocatoria();</span>
+<span class="fc" id="L89">        convocatoria.setIdConvocatoria(convocatoriaDTO.getIdConvocatoria());</span>
+<span class="fc" id="L90">        convocatoria.setNombre(convocatoriaDTO.getNombre());</span>
+<span class="fc" id="L91">        convocatoria.setFechaInicio(convocatoriaDTO.getFechaInicio());</span>
+<span class="fc" id="L92">        convocatoria.setFechaFin(convocatoriaDTO.getFechaFin());</span>
+<span class="fc" id="L93">        return convocatoria;</span>
+    }
+
+    public static MateriaDTO materiaToDto(Materia materia) {
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        if (materia == null) {</span>
+<span class="fc" id="L98">            return null;</span>
+        }
+
+<span class="fc" id="L101">        return new MateriaDTO(</span>
+<span class="fc" id="L102">                materia.getId(),</span>
+<span class="fc" id="L103">                materia.getNombre(),</span>
+<span class="fc" id="L104">                materia.getEliminada()</span>
+        );
+    }
+
+    public static Materia materiaDTOtoEntity(MateriaDTO materiaDTO) {
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (materiaDTO == null) {</span>
+<span class="fc" id="L110">            return null;</span>
+        }
+<span class="fc" id="L112">        Materia materia = new Materia();</span>
+<span class="fc" id="L113">        materia.setId(materiaDTO.getId());</span>
+<span class="fc" id="L114">        materia.setNombre(materiaDTO.getNombre());</span>
+<span class="fc" id="L115">        materia.setEliminada(materiaDTO.getEliminada());</span>
+<span class="fc" id="L116">        return materia;</span>
+    }
+
+    public static PruebaDTO pruebaToDto(Prueba prueba) {
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (prueba == null) {</span>
+<span class="fc" id="L121">            return null;</span>
+        }
+<span class="fc" id="L123">        return new PruebaDTO(</span>
+<span class="fc" id="L124">                prueba.getId(),</span>
+<span class="fc" id="L125">                slotToDto(prueba.getSlot()),</span>
+<span class="fc" id="L126">                materiaToDto(prueba.getMateria()),</span>
+<span class="fc" id="L127">                prueba.getEliminada()</span>
+        );
+    }
+
+    public static Prueba pruebaDTOtoEntity(PruebaDTO pruebaDTO) {
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (pruebaDTO == null) {</span>
+<span class="fc" id="L133">            return null;</span>
+        }
+<span class="fc" id="L135">        Prueba prueba = new Prueba();</span>
+<span class="fc" id="L136">        prueba.setId(pruebaDTO.getId());</span>
+<span class="fc" id="L137">        prueba.setSlot(slotDTOtoEntity(pruebaDTO.getSlot()));</span>
+<span class="fc" id="L138">        prueba.setMateria(materiaDTOtoEntity(pruebaDTO.getMateria()));</span>
+<span class="fc" id="L139">        prueba.setEliminada(pruebaDTO.getEliminada());</span>
+<span class="fc" id="L140">        return prueba;</span>
+    }
+
+    public static SlotDTO slotToDto(Slot slot) {
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if (slot == null) {</span>
+<span class="fc" id="L145">            return null;</span>
+        }
+
+<span class="fc" id="L148">        return new SlotDTO(</span>
+<span class="fc" id="L149">                slot.getId(),</span>
+<span class="fc" id="L150">                slot.getInicio(),</span>
+<span class="fc" id="L151">                slot.getFin(),</span>
+<span class="fc" id="L152">                slot.getEliminado(),</span>
+<span class="fc" id="L153">                convocatoriaToDto(slot.getConvocatoria())</span>
+        );
+    }
+
+    public static Slot slotDTOtoEntity(SlotDTO slotDTO) {
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (slotDTO == null) {</span>
+<span class="fc" id="L159">            return null;</span>
+        }
+<span class="fc" id="L161">        Slot slot = new Slot();</span>
+<span class="fc" id="L162">        slot.setId(slotDTO.getId());</span>
+<span class="fc" id="L163">        slot.setInicio(slotDTO.getInicio());</span>
+<span class="fc" id="L164">        slot.setFin(slotDTO.getFin());</span>
+<span class="fc" id="L165">        slot.setEliminado(slotDTO.getEliminado());</span>
+<span class="fc" id="L166">        slot.setConvocatoria(convocatoriaDTOtoEntity(slotDTO.getConvocatoria()));</span>
+<span class="fc" id="L167">        return slot;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

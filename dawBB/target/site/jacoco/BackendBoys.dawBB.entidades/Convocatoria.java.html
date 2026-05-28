@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Convocatoria.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">daw</a> &gt; <a href="index.source.html" class="el_package">BackendBoys.dawBB.entidades</a> &gt; <span class="el_source">Convocatoria.java</span></div><h1>Convocatoria.java</h1><pre class="source lang-java linenums">package BackendBoys.dawBB.entidades;
+
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+//No se usan todos los parámetros solos los indicados
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+//Se excluyen del toString las materias y slots, ya que no han de representarse con la convocatoria
+@ToString(exclude = {&quot;materias&quot;, &quot;slots&quot;})
+@Table(name = &quot;convocatorias&quot;)
+<span class="fc" id="L21">public class Convocatoria {</span>
+
+    @Id
+    //Autoincremento para el ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //Asi incluimos que parámetro se usara para el Equals
+    @EqualsAndHashCode.Include
+    private Long idConvocatoria;
+
+    @Column(nullable = false, length = 100)
+    private String nombre;
+
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
+
+    private Boolean actual;
+
+<span class="fc" id="L38">    @ManyToMany</span>
+    //Con esto creamos la tabla intermedia que se usa de apoyo para las relaciones ManyToMany
+    @JoinTable(name = &quot;convocatoria_materia&quot;, joinColumns = @JoinColumn(name = &quot;id_convocatoria&quot;),
+            inverseJoinColumns = @JoinColumn(name = &quot;id_materia&quot;))
+    private List&lt;Materia&gt; materias = new ArrayList&lt;&gt;();
+
+    //Con CascadeType.ALL conseguimos que cualquier operación con convocatoria creer, actualice o borre secuencialmente otros slots
+    //Con orphanRemoval = true si borramos un slot de una convocatoria se borra el slot de la tabla slot
+<span class="fc" id="L46">    @OneToMany(mappedBy = &quot;convocatoria&quot;, cascade = CascadeType.ALL, orphanRemoval = true)</span>
+    private List&lt;Slot&gt; slots = new ArrayList&lt;&gt;();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">daw</a> &gt; <a href="index.source.html" class="el_package">BackendBoys.dawBB.seguridad</a> &gt; <span class="el_source">JwtUtil.java</span></div><h1>JwtUtil.java</h1><pre class="source lang-java linenums">package BackendBoys.dawBB.seguridad;
+
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
+import java.util.Date;
+import java.util.function.Function;
+
+
+@Component
+<span class="fc" id="L14">public class JwtUtil {</span>
+
+    //Spring busca el valor de jwt.secret en application.properties y lo mete en secret
+    @Value(&quot;${jwt.secret}&quot;)
+    private String secret;
+
+    // Obtener username del JWT
+    public String getUsernameFromToken(String token) {
+<span class="fc" id="L22">        return getClaimFromToken(token, Claims::getSubject);</span>
+    }
+
+    // Obtener la fecha de expiración del JWT
+    public Date getExpirationDateFromToken(String token) {
+<span class="fc" id="L27">        return getClaimFromToken(token, Claims::getExpiration);</span>
+    }
+
+    //Este método se usará para poder parsear y obtener información del token que tenemos
+    public &lt;T&gt; T getClaimFromToken(String token, Function&lt;Claims, T&gt; claimsResolver) {
+<span class="fc" id="L32">        final Claims claims = getAllClaimsFromToken(token);</span>
+<span class="fc" id="L33">        return claimsResolver.apply(claims);</span>
+    }
+
+    //Cogemos y verificamos que el token que hemos recibido ha sido firmado con nuestra key, si es asi obtenemos su payload
+    private Claims getAllClaimsFromToken(String token) {
+<span class="fc" id="L38">        byte[] keyBytes = secret.getBytes();</span>
+<span class="fc" id="L39">        SecretKey key = Keys.hmacShaKeyFor(keyBytes);</span>
+<span class="fc" id="L40">        JwtParser parser = Jwts.parser().verifyWith(key).build();</span>
+<span class="fc" id="L41">        return parser.parseSignedClaims(token).getPayload();</span>
+    }
+
+    // Comprueba si el token ha expirado
+    public Boolean isTokenExpired(String token) {
+<span class="fc" id="L46">        final Date expiration = getExpirationDateFromToken(token);</span>
+<span class="fc bfc" id="L47" title="All 4 branches covered.">        return (expiration == null) || expiration.before(new Date());</span>
+    }
+
+    public String generateToken(String username) {
+<span class="fc" id="L51">        byte[] keyBytes = secret.getBytes();</span>
+<span class="fc" id="L52">        SecretKey key = Keys.hmacShaKeyFor(keyBytes);</span>
+
+<span class="fc" id="L54">        return Jwts.builder()</span>
+<span class="fc" id="L55">                .subject(username) //Usamos el username para la clave</span>
+<span class="fc" id="L56">                .issuedAt(new Date(System.currentTimeMillis())) // Fecha de inicio de validez del token</span>
+<span class="fc" id="L57">                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // Caduca en 10 horas</span>
+<span class="fc" id="L58">                .signWith(key) // Firmamos con esta</span>
+<span class="fc" id="L59">                .compact(); // Empaquetamos en formato ilegible</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

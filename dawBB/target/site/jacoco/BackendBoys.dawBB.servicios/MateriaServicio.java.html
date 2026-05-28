@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MateriaServicio.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">daw</a> &gt; <a href="index.source.html" class="el_package">BackendBoys.dawBB.servicios</a> &gt; <span class="el_source">MateriaServicio.java</span></div><h1>MateriaServicio.java</h1><pre class="source lang-java linenums">package BackendBoys.dawBB.servicios;
+
+
+import BackendBoys.dawBB.entidades.Materia;
+import BackendBoys.dawBB.excepciones.MateriaNoEncontrado;
+import BackendBoys.dawBB.repositorios.MateriaRepositorio;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+public class MateriaServicio {
+
+    private final MateriaRepositorio materiaRepositorio;
+
+<span class="fc" id="L17">    public MateriaServicio(MateriaRepositorio materiaRepositorio) {</span>
+<span class="fc" id="L18">        this.materiaRepositorio = materiaRepositorio;</span>
+<span class="fc" id="L19">    }</span>
+
+    public Materia obtenerMateriaPorId(Long id) {
+        //Buscamos la materia. Si el ID no existe en la BD, lanza excepción 404.
+<span class="fc" id="L23">        Materia materia = materiaRepositorio.findById(id).orElseThrow(() -&gt; new MateriaNoEncontrado(id));</span>
+
+        //Si existe, pero está &quot;eliminada&quot;, lanzamos 404 también.
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (materia.getEliminada()) {</span>
+<span class="fc" id="L27">            throw new MateriaNoEncontrado(id);</span>
+        }
+
+<span class="fc" id="L30">        return materia;</span>
+    }
+
+    public List&lt;Materia&gt; obtenerTodasLasMateriasActivas() {
+        //usar linea de repositorio para encontrar lo que buscamos
+        //esta linea solo busca materias sin eliminar
+<span class="fc" id="L36">        return materiaRepositorio.findByEliminadaFalse();</span>
+    }
+
+    public List&lt;Materia&gt; obtenerTodasLasMaterias() {
+        //busca todas las materias, incluso las eliminadas
+<span class="fc" id="L41">        return materiaRepositorio.findAll();</span>
+    }
+
+    @Transactional
+    public Materia actualizarMateria(Long id, Materia materia) {
+        //Busca la materia existente, se encarga del error 404
+<span class="fc" id="L47">        Materia materiaExistente = this.obtenerMateriaPorId(id);</span>
+
+        //Actualizacion de materia
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (materia.getNombre() != null) {</span>
+<span class="fc" id="L51">            materiaExistente.setNombre(materia.getNombre());</span>
+        }
+
+        //guardar cambios
+<span class="fc" id="L55">        return materiaRepositorio.save(materiaExistente);</span>
+    }
+
+    @Transactional
+    public void eliminarMateria(Long id) {
+        //comprobar si existe, error 404 si no
+<span class="fc" id="L61">        Materia materia = this.obtenerMateriaPorId(id);</span>
+
+        //&quot;eliminar&quot; la materia
+<span class="fc" id="L64">        materia.setEliminada(true);</span>
+
+        //Guarda el cambio en la base de datos
+<span class="fc" id="L67">        materiaRepositorio.save(materia);</span>
+<span class="fc" id="L68">    }</span>
+
+    @Transactional
+    public Materia crearMateria(Materia materia) {
+
+        //Entidad en blanco, la id se genera automaticamente en principio
+<span class="fc" id="L74">        Materia nuevaMateria = new Materia();</span>
+        //Asignacion de nombre
+<span class="fc" id="L76">        nuevaMateria.setNombre(materia.getNombre());</span>
+
+        //Asignacion de estado
+<span class="fc" id="L79">        nuevaMateria.setEliminada(false);</span>
+
+        //Guardar en base de datos
+<span class="fc" id="L82">        return materiaRepositorio.save(nuevaMateria);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
